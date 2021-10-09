@@ -33,52 +33,34 @@ namespace PaMyStoreWindowsFormApp.Views.Store
             txtKullanici.Text = _user.Name;
 
             var aktifÜrünler = _user.Products.Where(u => u.IsActive == true).ToList();
-    
-            dgvUrunler.Columns[0].Visible = false;
-            dgvUrunler.Columns[1].HeaderText = "Ürün Adı";
-            dgvUrunler.Columns[2].HeaderText = "Fiyatı";
-            dgvUrunler.Columns[3].HeaderText = "Stok Miktarı";
-            dgvUrunler.Columns[4].HeaderText = "Başlık";
-            dgvUrunler.Columns[5].HeaderText = "Açıklama";
-            dgvUrunler.Columns[6].HeaderText = "Durumu";
-            for (int i = 0; i < aktifÜrünler.Count(); i++)
+
+            DataTable tablo = new DataTable();
+            tablo.Columns.Add("Ürün Adı", typeof(string));
+            tablo.Columns.Add("Fiyatı", typeof(string));
+            tablo.Columns.Add("Stok Miktarı", typeof(string));
+            tablo.Columns.Add("Başlık", typeof(string));
+            tablo.Columns.Add("Açıklama", typeof(string));
+            tablo.Columns.Add("Durumu", typeof(string));
+            tablo.Columns.Add("Satın Alma Tarihi", typeof(string));
+            tablo.Columns.Add("Kategoriler", typeof(string));
+            tablo.Columns.Add("Kullanıcı", typeof(string));
+
+            dgvUrunler.DataSource = tablo;
+            for (int i = 0; i < aktifÜrünler.Count; i++)
             {
-                if (aktifÜrünler[i].IsActive==true)
-                {
-                  
+                tablo.Rows.Add(
+                    aktifÜrünler[i].Name,
+                    aktifÜrünler[i].Price,
+                    aktifÜrünler[i].StockAmount,
+                    aktifÜrünler[i].Title,
+                    aktifÜrünler[i].Description,
+                    aktifÜrünler[i].IsActive ? "Aktif" : "Pasif".ToString(),
+                    aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd"),
+                    aktifÜrünler[i].Categories.Name,
+                    _user.Name
 
-                    dgvUrunler.Rows[i].Cells[6].Value = "Aktif";
-                }
-                else
-                {
-                    dgvUrunler.Rows[i].Cells[6].Value="Pasif";
-                }
-         
-                   
+                    );
             }
-            //dgvUrunler.Columns[7].Visible = false;
-            //dgvUrunler.Columns[8].Visible = false;
-            //dgvUrunler.Columns[9].Visible = false;
-            //dgvUrunler.Columns[10].Visible = false;
-
-            //dgvUrunler.Columns.Add("IsActive", "Durumu");
-            //dgvUrunler.Columns.Add("RegisterDate", "Satın Alma Tarihi");
-            //dgvUrunler.Columns.Add("CategoryId", "Kategoriler");
-            //dgvUrunler.Columns.Add("UserId", "Kullanıcı");
-            /////aktif olanların ismini değiştirmek istiyorum.
-            //for (int i = 0; i < aktifÜrünler.Count(); i++)
-            //{
-
-            //    dgvUrunler.Rows[i].Cells[11].Value = aktifÜrünler[i].IsActive ? "Aktif" : "Pasif";
-            //    dgvUrunler.Rows[i].Cells[12].Value = aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd");
-            //    dgvUrunler.Rows[i].Cells[13].Value = aktifÜrünler[i].Categories.Name;
-            //    foreach (var item in aktifÜrünler[i].Users)
-            //    {
-
-            //        dgvUrunler.Rows[i].Cells[14].Value = item.Name;
-            //    }
-
-            //}
          
         }
 
@@ -93,86 +75,37 @@ namespace PaMyStoreWindowsFormApp.Views.Store
                 //o yüzden AS PRODUCT YAZARAK ONU PRODUCT TİPİNDE BİR OBJE OLDUĞUNU BELİRTMİŞ OLDUM
             }
             db.SaveChanges();
-            //var aktifÜrünler = _user.Products.Where(u => u.IsActive == true).ToList();
-
-            //for (int i = 0; i < aktifÜrünler.Count(); i++)
-            //{
-            //    dgvUrunler.Columns[0].Visible = false;
-            //    dgvUrunler.Rows[i].Cells[1].Value = aktifÜrünler[i].Name;
-            //    dgvUrunler.Rows[i].Cells[2].Value = aktifÜrünler[i].Price;
-            //    dgvUrunler.Rows[i].Cells[3].Value = aktifÜrünler[i].StockAmount;
-            //    dgvUrunler.Rows[i].Cells[4].Value = aktifÜrünler[i].Description;
-            //    dgvUrunler.Rows[i].Cells[5].Value = aktifÜrünler[i].Title;
-            //    dgvUrunler.Columns[6].Visible = false;
-            //    dgvUrunler.Columns[7].Visible = false;
-            //    dgvUrunler.Columns[8].Visible = false;
-            //    dgvUrunler.Columns[9].Visible = false;
-            //    dgvUrunler.Columns[10].Visible = false;
-            //    dgvUrunler.Rows[i].Cells[11].Value = aktifÜrünler[i].IsActive ? "Aktif" : "Pasif";
-            //    dgvUrunler.Rows[i].Cells[12].Value = aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd");
-            //    dgvUrunler.Rows[i].Cells[13].Value = aktifÜrünler[i].Categories.Name;
-            //    foreach (var item in aktifÜrünler[i].Users)
-            //    {
-            //        dgvUrunler.Rows[i].Cells[14].Value = item.Name;
-            //    }
-
-            //}
-            //var urunler = user.Products.ToList();
-            //for (int i = 0; i < user.Products.Count(); i++)
-            //{
-            //    dgvUrunler.Rows[i].Cells[6].Value = urunler[i].IsActive ? "Aktif" : "Pasif";
-            //    dgvUrunler.Rows[i].Cells[7].Value = urunler[i].RegisterDate.ToString("yyyy-MM-dd");
-            //    dgvUrunler.Rows[i].Cells[8].Value = urunler[i].Categories.Name;
-            //    foreach (var item in urunler[i].Users)
-            //    {
-
-            //        dgvUrunler.Rows[i].Cells[9].Value = item.Name;
-            //    }
-
-            //}
-            //    dgvUrunler.Rows[i].Cells[6].Value = urunler[i].IsActive ? "Aktif" : "Pasif";
-            //dgvUrunler.DataSource = user.Products.ToList();
-
-            //for (int i = 0; i < aktifÜrünler.Count(); i++)
-            //{
-            //    dgvUrunler.Rows[i].Cells[1].Value = aktifÜrünler[i].Name;
-            //    //dgvUrunler.Rows[i].Cells[2].Value = aktifÜrünler[i].Price;
-            //    //dgvUrunler.Rows[i].Cells[3].Value = aktifÜrünler[i].StockAmount;
-            //    //dgvUrunler.Rows[i].Cells[4].Value = aktifÜrünler[i].Title;
-            //    //dgvUrunler.Rows[i].Cells[5].Value = aktifÜrünler[i].Description;
-            //    //dgvUrunler.Rows[i].Cells[6].Value = aktifÜrünler[i].IsActive ? "Aktif" : "Pasif";
-            //    //dgvUrunler.Rows[i].Cells[7].Value = aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd");
-            //    //dgvUrunler.Rows[i].Cells[8].Value = aktifÜrünler[i].Categories.Name;
-            //    //foreach (var item in aktifÜrünler[i].Users)
-            //    //{
-
-            //    //    dgvUrunler.Rows[i].Cells[9].Value = item.Name;
-            //    //}
-
-            //}
-
+          
             var aktifÜrünler = user.Products.Where(u => u.IsActive == true).ToList();
             var sonla = db.Products.ToList();
             //dgvUrunler.DataSource = aktifÜrünler.ToList();
+            DataTable tablo = new DataTable();
+            tablo.Columns.Add("Ürün Adı", typeof(string));
+            tablo.Columns.Add("Fiyatı", typeof(string));
+            tablo.Columns.Add("Stok Miktarı", typeof(string));
+            tablo.Columns.Add("Başlık", typeof(string));
+            tablo.Columns.Add("Açıklama", typeof(string));
+            tablo.Columns.Add("Durumu", typeof(string));
+            tablo.Columns.Add("Satın Alma Tarihi", typeof(string));
+            tablo.Columns.Add("Kategoriler", typeof(string));
+            tablo.Columns.Add("Kullanıcı", typeof(string));
 
-            for (int i = 0; i < sonla.Count(); i++)
+            dgvUrunler.DataSource = tablo;
+            for (int i = 0; i < aktifÜrünler.Count; i++)
             {
+                tablo.Rows.Add(
+                    aktifÜrünler[i].Name,
+                    aktifÜrünler[i].Price,
+                    aktifÜrünler[i].StockAmount,
+                    aktifÜrünler[i].Title,
+                    aktifÜrünler[i].Description,
+                    aktifÜrünler[i].IsActive ? "Aktif" : "Pasif".ToString(),
+                    aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd"),
+                    aktifÜrünler[i].Categories.Name,
+                    _user.Name
 
-                dgvUrunler.Columns[12].HeaderText = "BU cell ne istiyor";
-
-                //foreach (var item in sonla[i].Users)
-                //{
-
-                //    dgvUrunler.Rows[i].Cells[14].Value = item.Name;
-                //}
-                //dgvUrunler.Rows[i].Cells[12].Value = aktifÜrünler[i].ProductId;
-                //dgvUrunler.Rows[i].Cells[12].Value = aktifÜrünler[i].ProductId;
-
-                
-                
+                    );
             }
-            dgvUrunler.DataSource = sonla.ToList();
-            //dgvUrunler.Columns[11].HeaderText = "deneme";
 
         }
 
@@ -203,37 +136,23 @@ namespace PaMyStoreWindowsFormApp.Views.Store
 
         private void btnSil_Click(object sender, EventArgs e)
         {
-            var silinecek = dgvUrunler.SelectedRows[0].DataBoundItem as Products;
+            var silinecek = dgvUrunler.SelectedRows[0].Cells[0].Value.ToString();
+            List<Products> listem = db.Products.Where(u => u.Name == silinecek).ToList();
             Users user = db.Users.Find(_user.UserId);
-            //Products urun = db.Products.Find(silinecek.ProductId);
-            user.Products.Remove(db.Products.Find(silinecek.ProductId));
+            for (int i = 0; i < listem.Count; i++)
+            {
+            user.Products.Remove(listem[i]);
+            }
             db.SaveChanges();
-            //var aktifÜrünler = _user.Products.Where(u => u.IsActive == true).ToList();
-
-            //for (int i = 0; i < aktifÜrünler.Count(); i++)
-            //{
-            //    dgvUrunler.Columns[0].Visible = false;
-            //    dgvUrunler.Rows[i].Cells[1].Value = aktifÜrünler[i].Name;
-            //    dgvUrunler.Rows[i].Cells[2].Value = aktifÜrünler[i].Price;
-            //    dgvUrunler.Rows[i].Cells[3].Value = aktifÜrünler[i].StockAmount;
-            //    dgvUrunler.Rows[i].Cells[4].Value = aktifÜrünler[i].Description;
-            //    dgvUrunler.Rows[i].Cells[5].Value = aktifÜrünler[i].Title;
-            //    dgvUrunler.Columns[6].Visible = false;
-            //    dgvUrunler.Columns[7].Visible = false;
-            //    dgvUrunler.Columns[8].Visible = false;
-            //    dgvUrunler.Columns[9].Visible = false;
-            //    dgvUrunler.Columns[10].Visible = false;
-            //    dgvUrunler.Rows[i].Cells[11].Value = aktifÜrünler[i].IsActive ? "Aktif" : "Pasif";
-            //    dgvUrunler.Rows[i].Cells[12].Value = aktifÜrünler[i].RegisterDate.ToString("yyyy-MM-dd");
-            //    dgvUrunler.Rows[i].Cells[13].Value = aktifÜrünler[i].Categories.Name;
-            //    foreach (var item in aktifÜrünler[i].Users)
-            //    {
-            //        dgvUrunler.Rows[i].Cells[14].Value = item.Name;
-            //    }
-
-
-            //}
-            dgvUrunler.DataSource = user.Products.ToList();
+            //DataTable tablo = new DataTable();
+            //tablo.Columns.Add("Ürün Adı", typeof(string));
+            //tablo.Columns.Add("Fiyatı", typeof(string));
+            //tablo.Columns.Add("Stok Miktarı", typeof(string));
+            //tablo.Columns.Add("Başlık", typeof(string));
+            //tablo.Columns.Add("Açıklama", typeof(string));
+            //tablo.Columns.Add("Durumu", typeof(string));
+            dgvUrunler.Rows.RemoveAt(dgvUrunler.SelectedRows[0].Index);
+            db.SaveChanges();
     
         }
     }
